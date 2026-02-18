@@ -22,7 +22,7 @@ async function downloadFile(url: string, filePath: string): Promise<boolean> {
 
         if (!existsSync(path.dirname(filePath)))
             mkdirSync(path.dirname(filePath), { recursive: true });
-        writeFileSync(filePath, data, { encoding: 'utf8' });
+        writeFileSync(filePath, data.trim().concat('\n'), { encoding: 'utf8' });
 
         return true;
     } catch (error) {
