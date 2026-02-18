@@ -4,5 +4,5 @@ const baseUrl = new URL("https://raw.githubusercontent.com/RubenDguez/playwright
 
 export const fileUrlDestinationMapper: Array<{ url: string, path: string }> = [
     { url: new URL(".gitignore", baseUrl).toString(), path: path.join(process.cwd(), ".gitignore") },
-    { url: new URL("playcucumber.config.ts", baseUrl).toString(), path: path.join(process.cwd(), ".gitignore") }
+    { url: new URL("playcucumber.config.ts", baseUrl).toString(), path: path.join(process.cwd(), "playcucumber.config.ts") }
 ]
