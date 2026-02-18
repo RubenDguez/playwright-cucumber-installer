@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 
 import { execSync } from 'child_process';
+import { existsSync, mkdirSync, writeFileSync } from 'fs';
+import path from 'path';
+import { fileUrlDestinationMapper } from './fileMapper.js';
 
 function isGitDirectory(): boolean {
     try {
@@ -11,8 +14,31 @@ function isGitDirectory(): boolean {
     }
 }
 
-function main() {
-    
+async function downloadFile(url: string, filePath: string): Promise<boolean> {
+    try {
+        const response = await fetch(url)
+        const data = await response.text()
+
+        if (!existsSync(path.dirname(filePath)))
+            mkdirSync(path.dirname(filePath), { recursive: true });
+        writeFileSync(filePath, data, { encoding: 'utf8' });
+
+        return true;
+    } catch (error) {
+        console.error("Error downloading file: ", url, "\n", error)
+        process.exit(2)
+    }
+}
+
+async function main() {
+    const isGit = isGitDirectory();
+    if (!isGit) {
+        execSync('git init', { stdio: 'pipe' })
+    }
+
+    for (const file of fileUrlDestinationMapper) {
+        await downloadFile(file.url, file.path)
+    }
 }
 
 main();
