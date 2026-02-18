@@ -16,6 +16,7 @@ function isGitDirectory(): boolean {
 
 async function downloadFile(url: string, filePath: string): Promise<boolean> {
     try {
+        console.log("Downloading: ", url)
         const response = await fetch(url)
         const data = await response.text()
 

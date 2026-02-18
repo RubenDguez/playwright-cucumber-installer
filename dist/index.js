@@ -14,6 +14,7 @@ function isGitDirectory() {
 }
 async function downloadFile(url, filePath) {
     try {
+        console.log("Downloading: ", url);
         const response = await fetch(url);
         const data = await response.text();
         if (!existsSync(path.dirname(filePath)))
